@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Gestión mantenimiento</title>
+    <link rel="shortcut icon" href="{% static 'gestion/title_icon.png' %}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+    <style>
+        .cuadro {
+            background-color: #def1dd;
+            border: 2px solid #023d27;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .cuadro:hover {
+            transform: scale(1.05);
+        }
+    </style>
+
+
+
+
+
+
+</head>
+<body>
+
+    {% load static %}
+
+
+
+    <div class="container-lg text-center  mt-5" style="border:1px solid #cecece" > <!--Container principal--> 
+
+        <div class= "row text-center "> <!--Columna de encabezado -->
+
+            <div class="col-3 text-center border border-light-subtle" > <img src="{% static 'gestion/logo.jpg' %}" style="width: 200px; height: auto;"  /> </div> 
+
+            <div class="col-6 d-flex justify-content-center align-items-center"> <h2 class="texto-grande font-weight-bold"> INDICADORES DE MANTENIMIENTO</h2></div>
+
+            <div class="col-3 d-flex justify-content-center align-items-center border border-light-subtle"><a href="{% url 'admin:index' %}" button type="button" class="btn btn-primary">Modificar<br> datos </a></div>
+
+       
+
+
+        </div>
+
+        <div class="row text-center">
+
+            <div class="col-3 text-center border border-light-subtle"><h3>Paradas</h3>
+
+                <div class= "row text-center border border-light-subtle"><h5>Programa a 90 días</h5>
+
+
+                    {%for parada in proximas_paradas%}
+
+                    <div class="row">
+                        <div class="cuadro">
+                          <p><b>{{parada.name}} -- Inicio: {{parada.sch_s_date}}</p></b>
+                          <p>{{parada.get_status_display}}</p>
+                        </div>
+                      </div>
+                    
+                    {% endfor %}  
+                    
+                </div>
+
+               
+
+            </div> 
+
+
+            <div class="col-9 text-center border border-light-subtle"><h3>Evolución de indicadores</h3>
+
+            
+
+
+                <div class= "row text-center border border-light-subtle">
+                    <div class="container-fluid">
+                        {{ graph_html|safe }}
+                    </div>
+                </div>
+
+
+            </div> 
+
+        </div>
+
+
+
+    </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>
